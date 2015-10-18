@@ -1,0 +1,18 @@
+- import org.runger.extrplayr.ExtrInput
+- import org.runger.extrplayr.ExtrOutput
+
+- attributes("title") = "AudioControl"
+
+-@val config: List[ExtrOutput]
+-@val state: Map[ExtrInput, List[ExtrOutput]]
+
+- for((input, outs) <- state)
+    .player
+        %h2= {input.name}
+        - for(availOut <- config)
+            .out
+                %label
+                    %input(type="checkbox" checked={outs.contains(availOut)})= {availOut.name}
+
+%script(type="text/javascript" src="/js/jquery-2.1.4.min.js")
+%script(type="text/javascript" src="/js/audio.js")

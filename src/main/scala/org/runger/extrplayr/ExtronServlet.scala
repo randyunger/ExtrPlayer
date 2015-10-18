@@ -14,7 +14,7 @@ class ExtronServlet extends ExtrStack {
     </html>
   }
 
-  get("/audio") {
+  get("/audioBlah") {
     contentType="text/html"
 
     val config = Map(
@@ -33,10 +33,22 @@ class ExtronServlet extends ExtrStack {
     page
   }
 
-  get("/a") {
+  get("/audio") {
     contentType="text/html"
 //    layoutTemplate("/WEB-INF")
-    scaml("hello")
+
+    val config = ExtrConfig.outputs
+
+    val state: Map[ExtrInput, List[ExtrOutput]] = Map(
+      ExtrInput(1, "Randy's Player") -> List(ExtrConfig.outputs(1))
+      , ExtrInput(2, "Lara's Player") -> List()
+    )
+
+//    val state = Map(
+//      ExtrInput
+//    )
+
+    scaml("audio", "config" -> config, "state" -> state)
 
   }
 

@@ -5,3 +5,10 @@ body {
     padding: 40px 15px;
     /*text-align: center;*/
 }
+
+/*.player :nth-child(even){*/
+    /*background-color: #bbcadc;*/
+/*}*/
+/*.player :nth-child(odd){*/
+    /*background-color: #ffffff;*/
+/*}*/
