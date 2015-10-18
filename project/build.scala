@@ -5,7 +5,7 @@ import org.scalatra.sbt.PluginKeys._
 import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
 
-object LuBuild extends Build {
+object ExtrBuild extends Build {
   val Organization = "org.runger"
   val Name = "ExtrPlayer"
   val Version = "0.1.0-SNAPSHOT"
@@ -23,7 +23,10 @@ object LuBuild extends Build {
       resolvers += Classpaths.typesafeReleases,
       resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       libraryDependencies ++= Seq(
-        "org.scalatra" %% "scalatra" % ScalatraVersion
+        "org.scala-lang" % "scala-library" % ScalaVersion
+        ,"org.scala-lang" % "scala-reflect" % ScalaVersion
+        ,"org.scala-lang" % "scala-compiler" % ScalaVersion
+        ,"org.scalatra" %% "scalatra" % ScalatraVersion
         ,"org.scalatra" %% "scalatra-scalate" % ScalatraVersion
         ,"org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test"
         ,"ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime"

@@ -24,7 +24,8 @@ object ExtrConfig {
     , ExtrOutput(6, "Paige's Room")
   )
 
-
+  def getTies() = {
+  }
 
 
 }
