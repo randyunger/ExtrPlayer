@@ -6,6 +6,32 @@ body {
     /*text-align: center;*/
 }
 
+.player {
+    width: 300px;
+    clear: both;
+}
+
+.button {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    background: #E9FFDF;
+}
+
+#randy .out {
+    background: #C0DEF1;
+    margin: 5px;
+}
+
+#lara .out {
+    background: #FFD1D7;
+    margin: 5px;
+}
+
+input[type="checkbox"] {
+    margin-right: 20px;
+}
+
 /*.player :nth-child(even){*/
     /*background-color: #bbcadc;*/
 /*}*/

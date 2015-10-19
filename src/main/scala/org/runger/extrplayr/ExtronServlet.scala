@@ -18,8 +18,8 @@ class ExtronServlet extends ExtrStack {
     contentType="text/html"
 
     val config = Map(
-      ExtrInput(1, "Randy's Player") -> List(ExtrOutput(1, "Kitchen"))
-      , ExtrInput(2, "Lara's Player") -> List()
+      ExtrInput(1, "Randy's Player", "randy") -> List(ExtrOutput(1, "Kitchen"))
+      , ExtrInput(2, "Lara's Player", "lara") -> List()
     )
 
     def mkOutList(in: ExtrInput, outs: List[ExtrOutput]) = {
@@ -39,17 +39,68 @@ class ExtronServlet extends ExtrStack {
 
     val config = ExtrConfig.outputs
 
-    val state: Map[ExtrInput, List[ExtrOutput]] = Map(
-      ExtrInput(1, "Randy's Player") -> List(ExtrConfig.outputs(1))
-      , ExtrInput(2, "Lara's Player") -> List()
-    )
+//    val state: List[(ExtrInput, List[ExtrOutput])] = List(
+//      ExtrInput(1, "Randy's Player", "randy") -> List(ExtrConfig.outputs(1))
+//      , ExtrInput(2, "Lara's Player", "lara") -> List()
+//    )
 
 //    val state = Map(
 //      ExtrInput
 //    )
 
+    //Make Randy come before Lara
+    val state = AudioService().simpleStateForAllInputs().toList.sortBy(_._1.name).reverse
+
     scaml("audio", "config" -> config, "state" -> state)
 
+  }
+
+  def tryToInt(i: String) = {
+    try {
+      Option(i.toInt)
+    } catch {
+      case e: Exception => None
+    }
+
+  }
+
+  post("/tie/:output/:input") {
+    val outputO = tryToInt(params("output"))
+    val inputO = tryToInt(params("input"))
+    println(s"in $inputO out $outputO")
+    for {
+      input <- inputO
+      output <- outputO
+    } yield {
+      AudioService().tie(input, output)
+    }
+  }
+
+  delete("/tie/:output") {
+    val outputO = tryToInt(params("output"))
+    println(s"deleting $outputO")
+    for {
+      output <- outputO
+    } yield AudioService().disable(output)
+  }
+
+  delete("/tie") {
+    println(s"deleting all ties")
+    AudioService().disableAll()
+  }
+
+  get("/audio/:output") {
+    val outputO = tryToInt(params("output"))
+    println(s"getting $outputO")
+    val resp = for {
+      output <- outputO
+    } yield TelnetClient().readTie(output)
+    resp
+  }
+
+  get("/audio/state") {
+    val resp = AudioService().fullState()
+    resp
   }
 
 }

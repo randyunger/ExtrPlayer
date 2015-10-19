@@ -4,15 +4,22 @@
 - attributes("title") = "AudioControl"
 
 -@val config: List[ExtrOutput]
--@val state: Map[ExtrInput, List[ExtrOutput]]
+-@val state: List[(ExtrInput, List[ExtrOutput])]
+
+.button(id= "allOff")
+    %h4 All Off
+
+.button(id= "refresh")
+    %h4 Refresh
 
 - for((input, outs) <- state)
-    .player
+    .player(id={input.shortName})
         %h2= {input.name}
         - for(availOut <- config)
             .out
                 %label
-                    %input(type="checkbox" checked={outs.contains(availOut)})= {availOut.name}
+                    - val on = outs.contains(availOut)
+                    %input(type="checkbox" checked={on} inputId={input.id} outputId={availOut.id})= {availOut.name}
 
 %script(type="text/javascript" src="/js/jquery-2.1.4.min.js")
 %script(type="text/javascript" src="/js/audio.js")
