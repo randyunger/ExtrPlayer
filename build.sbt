@@ -1,4 +1,4 @@
-name := "Light"
+name := "ExtrPlayr"
 
 version := "1.0"
 
