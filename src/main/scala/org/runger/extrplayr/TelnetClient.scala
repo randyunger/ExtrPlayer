@@ -20,37 +20,56 @@ object TelnetClient {
     instance
   }
 
+}
+
+class CommPackage(addr: String) {
+
+  val sock = new Socket(addr, 23)
+  val socketIsIntact = true
+  val i = new BufferedReader(new InputStreamReader(sock.getInputStream))
+  val o = new PrintWriter(sock.getOutputStream, true)
+
+  def send(message: String) = {
+    o.println(message + '\r')
+  }
+
+  def reconnect() = {
+    val prev = sock.getLocalSocketAddress
+    sock.connect(prev)
+  }
+
+  def close() = {
+    sock.close()
+  }
 
 }
 
-class TelnetClient(ip: String, user: String, pwd: String) {
+class TelnetClient(ip: String, user: String, pwd: String) extends Logging {
 
-  def mkSock = new Socket(ip, 23)
-
-  var sock = mkSock
-  var socketIsIntact = true
-  val i = new BufferedReader(new InputStreamReader(sock.getInputStream))
-  val o = new PrintWriter(sock.getOutputStream, true)
+  var comm = new CommPackage(ip)
 
   class TelnetActor extends Actor {
     def receive = {
       case "login" => {
-        println("Login prompt received")
-        o.println(user + '\r')
+        info("Login prompt received")
+//        o.println(user + '\r')
+        comm.send(user)
       }
       case "pwd" => {
-        println("Pwd prompt received")
-        o.println(pwd + '\r')
+        info("Pwd prompt received")
+//        o.println(pwd + '\r')
+        comm.send(pwd)
       }
       case cmd: String => {
-        println(s"Sending telnet cmd: $cmd")
-        if(!socketIsIntact) { //todo This won't work since i and o now point to the wrong place! Use singleton?
-          sock = mkSock
-          Thread.sleep(150)
-        }
-        o.println(cmd + '\r')
+        info(s"Sending telnet cmd: $cmd")
+//        if(!socketIsIntact) { //todo This won't work since i and o now point to the wrong place! Use singleton?
+//          sock = mkSock
+//          Thread.sleep(150)
+//        }
+//        o.println(cmd + '\r')
+        comm.send(cmd)
       }
-      case _ => println("Unknown cmd to Actor")
+      case _ => warn("Unknown cmd to Actor")
     }
   }
 
@@ -77,16 +96,26 @@ class TelnetClient(ip: String, user: String, pwd: String) {
       //      lutronActor ! "pwd"
 
       //Send subsequent output to Actor
-      try {
-        var line = i.readLine()
-        while (true) {
-          println(line)
-          line = i.readLine()
-          lastResp = line
+      while (true) {
+        try {
+          var line = comm.i.readLine()
+          while (true) {
+            info(s"rcvd: $line")
+            line = comm.i.readLine()
+            lastResp = line
+            if(line.contains("Copyright 2007")) comm.send("\0330*1000tc")
+//            if(line.contains("Out06 In02 Aud")) ???
+          }
+        } catch {
+          case e: Exception => {
+            warn("Warning: Socket was disconnected!")
+            warn(e.getStackTrace.mkString("\n"))
+            e.printStackTrace()
+          }
         }
-      } catch {
-        case e: Exception => {
-          socketIsIntact = false
+        finally {
+          comm.close()
+          comm = new CommPackage(ip)
         }
       }
     }

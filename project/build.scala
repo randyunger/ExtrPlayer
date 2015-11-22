@@ -8,31 +8,39 @@ import ScalateKeys._
 import sbtassembly.AssemblyPlugin.autoImport._
 
 object ExtrBuild extends Build {
-  val Organization = "org.runger.extrplayr"
+//  val Organization = "org.runger.extrplayr"
   val Name = "ExtrPlayer"
-  val Version = "0.1.1"
+//  val Version = "0.1.1"
   val ScalaVersion = "2.11.6"
   val ScalatraVersion = "2.4.0-RC2-2"
   val jettyVersion = "9.3.5.v20151012"
 
-//  lazy val commonSettings = Seq(
-//    version := "0.1-SNAPSHOT",
-//    organization := "com.example",
-//    scalaVersion := "2.10.1"
-//  )
+  lazy val commonSettings = Seq(
+    version := "0.1.1",
+    organization := "org.runger.extrplayr",
+    scalaVersion := ScalaVersion
+  )
 
-  test in assembly := {}
+  resolvers += Resolver.jcenterRepo
+  resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases"
+//  enablePlugins(TomcatPlugin)
 
-  mainClass in assembly := Some("org.runger.extrplayr.WebServerRunner")
+  lazy val app = (project in file("app")).
+    settings(commonSettings: _*).
+    settings(
+      assemblyJarName in assembly := "ExtrPlayr.jar",
+      test in assembly := {},
+      mainClass in assembly := Some("org.runger.extrplayr.WebServerRunner")
+    )
 
   lazy val project = Project (
     "ExtrPlayer",
     file("."),
-    settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
-      organization := Organization,
+    settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ commonSettings ++ Seq(
+//      organization := Organization,
       name := Name,
-      version := Version,
-      scalaVersion := ScalaVersion,
+//      version := Version,
+//      scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
       resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       libraryDependencies ++= Seq(
@@ -46,7 +54,7 @@ object ExtrBuild extends Build {
         ,"org.eclipse.jetty" % "jetty-webapp" % jettyVersion
         ,"org.eclipse.jetty" % "jetty-server" % jettyVersion
         ,"org.eclipse.jetty" % "jetty-servlet" % jettyVersion
-        ,"ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime"
+        ,"ch.qos.logback" % "logback-classic" % "1.1.2"
         ,"javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
         ,"commons-net" % "commons-net" % "2.0"
         ,"com.typesafe.akka" % "akka-actor_2.11" % "2.3.11"

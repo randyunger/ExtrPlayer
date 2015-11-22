@@ -10,14 +10,14 @@ $(document).ready(function(){
 
         if(enable) {
             var input = $(this).attr("inputId");
-            var url = "/tie/"+output+"/"+input;
+            var url = "tie/"+output+"/"+input;
             $.ajax({
                 url: url,
                 type: 'POST'
                 //data: { strID:$(this).attr("id"), strState:state }
             });
         } else {
-            var url = "/tie/"+output;
+            var url = "tie/"+output;
             $.ajax({
                 url: url,
                 type: 'DELETE'
@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){
     $("#allOff").click(function() {
-        var url = "/tie";
+        var url = "tie";
         $.ajax({
             url: url,
             type: 'DELETE'

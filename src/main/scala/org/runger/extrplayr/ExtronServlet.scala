@@ -1,9 +1,11 @@
 package org.runger.extrplayr
 
 import org.scalatra._
+import org.slf4j.LoggerFactory
 import scalate.ScalateSupport
+import ch.qos.logback.classic.Logger
 
-class ExtronServlet extends ExtrStack {
+class ExtronServlet extends ExtrStack with Logging {
 
   get("/") {
     <html>
@@ -12,6 +14,10 @@ class ExtronServlet extends ExtrStack {
         Say <a href="hello-scalate">hello to Scalate</a>.
       </body>
     </html>
+  }
+
+  get("/exc") {
+    ???
   }
 
   get("/audioBlah") {
@@ -34,6 +40,9 @@ class ExtronServlet extends ExtrStack {
   }
 
   get("/audio") {
+
+    info("http request received /audio")
+
     contentType="text/html"
 //    layoutTemplate("/WEB-INF")
 
@@ -50,6 +59,8 @@ class ExtronServlet extends ExtrStack {
 
     //Make Randy come before Lara
     val state = AudioService().simpleStateForAllInputs().toList.sortBy(_._1.name).reverse
+
+    info(s"req state:: $state")
 
     scaml("audio", "config" -> config, "state" -> state)
 
