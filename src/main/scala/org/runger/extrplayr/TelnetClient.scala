@@ -62,7 +62,7 @@ class TelnetClient(ip: String, user: String, pwd: String) extends Logging {
       }
       case cmd: String => {
         info(s"Sending telnet cmd: $cmd")
-//        if(!socketIsIntact) { //todo This won't work since i and o now point to the wrong place! Use singleton?
+//        if(!socketIsIntact) {
 //          sock = mkSock
 //          Thread.sleep(150)
 //        }

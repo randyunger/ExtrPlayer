@@ -8,10 +8,10 @@
   </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>extrPlayer.log</file>
+        <file>logs/extrPlayer.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>logs/logFile.%d{yyyy-MM}.log</fileNamePattern>
+            <fileNamePattern>logs/archive/logFile.%d{yyyy-MM}.log</fileNamePattern>
 
             <!-- keep 30 days' worth of history -->
             <maxHistory>30</maxHistory>

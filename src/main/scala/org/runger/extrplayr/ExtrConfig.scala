@@ -20,8 +20,8 @@ object ExtrConfig {
     , ExtrOutput(2, "Play Room")
     , ExtrOutput(3, "Dining Room & Office")
     , ExtrOutput(4, "Master Bed & Bath")
-    , ExtrOutput(5, "Reed's Room")
-    , ExtrOutput(6, "Paige's Room")
+    , ExtrOutput(5, "Paige's Room")
+    , ExtrOutput(6, "Reed's Room")
   )
 
   val outputMap = outputs.map(o => (o.id, o)).toMap
