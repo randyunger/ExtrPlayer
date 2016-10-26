@@ -9,14 +9,13 @@ import sbtassembly.AssemblyPlugin.autoImport._
 
 object ExtrBuild extends Build {
 //  val Organization = "org.runger.extrplayr"
-  val Name = "ExtrPlayer"
-//  val Version = "0.1.1"
+  val Name = "ExtrPlayr"
   val ScalaVersion = "2.11.6"
   val ScalatraVersion = "2.4.0-RC2-2"
   val jettyVersion = "9.3.5.v20151012"
 
   lazy val commonSettings = Seq(
-    version := "0.1.1",
+    version := "0.1.2",
     organization := "org.runger.extrplayr",
     scalaVersion := ScalaVersion
   )
@@ -34,7 +33,7 @@ object ExtrBuild extends Build {
     )
 
   lazy val project = Project (
-    "ExtrPlayer",
+    "ExtrPlayr",
     file("."),
     settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ commonSettings ++ Seq(
 //      organization := Organization,

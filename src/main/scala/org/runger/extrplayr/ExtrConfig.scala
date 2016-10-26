@@ -13,6 +13,7 @@ object ExtrConfig {
   val inputs = List(
     ExtrInput(1, "Randy's Player", "randy")
     , ExtrInput(2, "Lara's Player", "lara")
+    , ExtrInput(3, "ChromeCast Player", "cc")
   )
 
   val outputs = List(
@@ -20,8 +21,9 @@ object ExtrConfig {
     , ExtrOutput(2, "Play Room")
     , ExtrOutput(3, "Dining Room & Office")
     , ExtrOutput(4, "Master Bed & Bath")
-    , ExtrOutput(5, "Paige's Room")
-    , ExtrOutput(6, "Reed's Room")
+    , ExtrOutput(5, "Kids Rooms")
+//    , ExtrOutput(6, "Reed's Room")
+    , ExtrOutput(6, "Back Patio")
   )
 
   val outputMap = outputs.map(o => (o.id, o)).toMap

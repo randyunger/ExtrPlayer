@@ -28,6 +28,11 @@ body {
     margin: 5px;
 }
 
+#cc .out {
+    background: #cfffd7;
+    margin: 5px;
+}
+
 input[type="checkbox"] {
     margin-right: 20px;
 }

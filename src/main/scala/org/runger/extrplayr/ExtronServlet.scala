@@ -58,7 +58,7 @@ class ExtronServlet extends ExtrStack with Logging {
 //    )
 
     //Make Randy come before Lara
-    val state = AudioService().simpleStateForAllInputs().toList.sortBy(_._1.name).reverse
+    val state = AudioService().simpleStateForAllInputs().toList.sortBy(x => x._1.id)
 
     info(s"req state:: $state")
 
