@@ -59,6 +59,8 @@ object ExtrBuild extends Build {
         ,"com.typesafe.akka" % "akka-actor_2.11" % "2.3.11"
         ,"com.typesafe.akka" % "akka-testkit_2.11" % "2.3.11" % "test"
         ,"org.scala-lang.modules" %% "scala-xml" % "1.0.3"
+        ,"com.h2database" % "h2" % "1.4.193"
+        ,"com.typesafe.slick" % "slick_2.11" % "3.1.1"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
