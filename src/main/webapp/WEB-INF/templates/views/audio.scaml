@@ -14,12 +14,12 @@
 
 - for((input, outs) <- state)
     .player(id={input.shortName})
-        %h2= {input.name}
+        %h2= {input.label}
         - for(availOut <- config)
             .out
                 %label
                     - val on = outs.contains(availOut)
-                    %input(type="checkbox" checked={on} inputId={input.id} outputId={availOut.id})= {availOut.name}
+                    %input(type="checkbox" checked={on} inputId={input.id} outputId={availOut.id})= {availOut.label}
 
 %script(type="text/javascript" src="js/jquery-2.1.4.min.js")
 %script(type="text/javascript" src="js/audio.js")
