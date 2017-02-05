@@ -15,7 +15,7 @@ object ExtrBuild extends Build {
   val jettyVersion = "9.3.5.v20151012"
 
   lazy val commonSettings = Seq(
-    version := "0.1.2",
+    version := "0.1.3",
     organization := "org.runger.extrplayr",
     scalaVersion := ScalaVersion
   )

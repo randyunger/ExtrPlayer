@@ -28,8 +28,23 @@ body {
     margin: 5px;
 }
 
-#cc .out {
+#down .out {
     background: #cfffd7;
+    margin: 5px;
+}
+
+#master .out {
+    background: #dbd5ff;
+    margin: 5px;
+}
+
+#kids .out {
+    background: #ffb87f;
+    margin: 5px;
+}
+
+#out .out {
+    background: #7bffda;
     margin: 5px;
 }
 

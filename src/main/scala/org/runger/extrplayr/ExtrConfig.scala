@@ -2,30 +2,38 @@ package org.runger.extrplayr
 
 import java.sql.{Connection, DriverManager, PreparedStatement}
 
+import slick.jdbc.meta.MTable
 import slick.lifted.Tag
+
+import scala.concurrent.Await
+import scala.concurrent.duration.{Duration, _}
 
 /**
  * Created by Unger on 10/17/15.
  */
 
-case class ExtrOutput(id: Int, name: String)
+case class ExtrOutput(id: Int, label: String)
 
-case class ExtrInput(id: Int, name: String, shortName: String)
+case class ExtrInput(id: Int, label: String, shortName: String)
 
 object ExtrConfig {
 
   def inputs = hard_inputs
   def outputs = hard_outputs
 
+  //Todo: switch b/w hard inputs and db inputs to make this more configurable
   def dbInputs = {
 
   }
 
 
   val hard_inputs = List(
-    ExtrInput(1, "Randy's Player", "randy")
-    , ExtrInput(2, "Lara's Player", "lara")
-    , ExtrInput(3, "ChromeCast Player", "cc")
+    ExtrInput(15, "Randy's Player", "randy")
+    , ExtrInput(16, "Lara's Player", "lara")
+    , ExtrInput(1, "The Downstairs Speakers", "down")
+    , ExtrInput(2, "The Master Speakers", "master")
+    , ExtrInput(3, "The Kids Room Speakers", "kids")
+    , ExtrInput(4, "The Outdoor Speakers", "out")
   )
 
   val hard_outputs = List(
@@ -47,46 +55,73 @@ import RDSConfig.api._
 
 
 
-case class InputsRow(id: Int, label: String, shortName: String)
+//case class InputsRow(id: Int, label: String, shortName: String)
 
-class InputsTable(tag: Tag) extends Table[InputsRow](tag, "Inputs") with Logging {
+class InputsTable(tag: Tag) extends Table[ExtrInput](tag, "Inputs") with Logging {
   def id = column[Int]("id", O.PrimaryKey)
   def label = column[String]("label")
   def shortName = column[String]("shortName")
 
-  val fromRow = (inRow: InputsRow) => {
+  val fromRow = (inRow: ExtrInput) => {
     Option(inRow.id, inRow.label, inRow.shortName)
   }
 
   val toRow = (tup: (Int, String, String)) => {
     val (id, label, shortName) = tup
-    InputsRow(id, label, shortName)
+    ExtrInput(id, label, shortName)
   }
 
   override def * = (id, label, shortName) <> (toRow, fromRow)
 }
 
 
-case class OutputsRow(id: Int, label: String)
+//case class OutputsRow(id: Int, label: String)
 
-class OutputsTable(tag: Tag) extends Table[OutputsRow](tag, "Outputs") with Logging {
+class OutputsTable(tag: Tag) extends Table[ExtrOutput](tag, "Outputs") with Logging {
   def id = column[Int]("id", O.PrimaryKey)
   def label = column[String]("label")
 
-  val fromRow = (outRow: OutputsRow) => {
+  val fromRow = (outRow: ExtrOutput) => {
     Option(outRow.id, outRow.label)
   }
 
 
   val toRow = (tup: (Int, String)) => {
     val (id, label) = tup
-    OutputsRow(id, label)
+    ExtrOutput(id, label)
   }
 
   override def * = (id, label) <> (toRow, fromRow)
 }
 
 
+object BootstrapDb extends App {
+  import scala.concurrent.ExecutionContext.Implicits.global
+
+  val db = Database.forURL("jdbc:h2:file:./inputsOutputs.db", driver = "org.h2.Driver")
+  val ins = TableQuery[InputsTable]
+  val outs = TableQuery[OutputsTable]
+
+  try {
+    Await.result(db.run(DBIO.seq(
+      ins.schema.create
+      ,outs.schema.create
+
+      , ins ++= ExtrConfig.hard_inputs
+      , outs ++= ExtrConfig.hard_outputs
+
+      , ins.result.map(println)
+      , outs.result.map(println)
+
+    )), Duration.Inf)
+  } catch {
+    case ex: Exception => ex.printStackTrace()
+  }
+
+  val tables = Await.result(db.run(MTable.getTables), 1.seconds).toList
+  println(tables)
+  tables.foreach(println)
+}
 
 
 //object DbConfig extends App {

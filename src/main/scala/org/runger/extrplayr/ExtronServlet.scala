@@ -29,11 +29,11 @@ class ExtronServlet extends ExtrStack with Logging {
     )
 
     def mkOutList(in: ExtrInput, outs: List[ExtrOutput]) = {
-      {outs.map(out => s"<div>${out.name}</div>")}.mkString("\n")
+      {outs.map(out => s"<div>${out.label}</div>")}.mkString("\n")
     }
 
     val page = config.map { case (in, outList) => {
-      s"<div>${in.name}</div>" + mkOutList(in, outList)
+      s"<div>${in.label}</div>" + mkOutList(in, outList)
     }}.mkString("\n")
 
     page
