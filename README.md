@@ -5,7 +5,6 @@ A WebApp for controlling Extron Audio routers. I use this for controlling my Who
 ## Build & Run ##
 
 ```sh
-$ cd Lu
 $ ./sbt
 > container:start
 > browse
