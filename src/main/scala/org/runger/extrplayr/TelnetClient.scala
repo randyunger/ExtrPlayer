@@ -132,7 +132,7 @@ class TelnetClient(ip: String, user: String, pwd: String) extends Logging {
 //    telnetActor ! s"id$$"
 //  }
 
-  //This is so bad for concurrency
+  //This is bad for concurrency
   def readTie(id: Int) = {
 //    readT.stop()
 //    o.println(s"$id$$" + '\r')
@@ -154,5 +154,4 @@ class TelnetClient(ip: String, user: String, pwd: String) extends Logging {
 //  )
 
 //}
-
 

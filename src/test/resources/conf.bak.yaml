@@ -1,0 +1,13 @@
+inputs:
+  - id: 1
+    label: randy player
+    shortName: Randy
+  - id: 2
+    label: lara player
+    shortName: Lara
+
+outputs:
+  - id: 1
+    label: kitchen
+  - id: 2
+    label: master

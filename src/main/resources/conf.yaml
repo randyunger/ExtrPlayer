@@ -1,0 +1,14 @@
+outputs:
+- {id: 1, label: Kitchen & Living Room}
+- {id: 2, label: Play Room}
+- {id: 3, label: Dining Room & Office}
+- {id: 4, label: Master Bed & Bath}
+- {id: 5, label: Kids Rooms}
+- {id: 6, label: Back Patio}
+inputs:
+- {id: 15, label: Randy's Player, shortName: randy}
+- {id: 16, label: Lara's Player, shortName: lara}
+- {id: 1, label: The Downstairs Speakers, shortName: down}
+- {id: 2, label: The Master Speakers, shortName: master}
+- {id: 3, label: The Kids Room Speakers, shortName: kids}
+- {id: 4, label: The Outdoor Speakers, shortName: out}
