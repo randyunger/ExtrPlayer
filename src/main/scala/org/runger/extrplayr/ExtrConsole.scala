@@ -6,7 +6,7 @@ package org.runger.extrplayr
 
 object ExtrConsole extends App {
   println("Connecting telnet...")
-  val at = new TelnetClient("AudioSwitch", "blah", "integration")
+  val at = new TelnetClient(ExtrConfig.host, "blah", "integration")
   println("Downloading schema...")
 //  val lu = LuConfig.parseXml
   println("Ready for input...")

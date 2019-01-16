@@ -22,6 +22,9 @@ case class ExtrInput(id: Int, label: String, shortName: String)
 
 object ExtrConfig extends Logging {
 
+  //Use IP address for now
+  val host = "192.168.1.15" //Instead of this host, since Avahi isnt working on rpi "audioswitch.local"
+
   //todo: have a way to reset this
   lazy val (inputs, outputs) = (dbInputs._1, dbInputs._2)
 

@@ -62,6 +62,7 @@ object ExtrBuild extends Build {
         ,"com.h2database" % "h2" % "1.4.193"
 //        ,"com.typesafe.slick" % "slick_2.11" % "3.1.1"
         ,"org.yaml" % "snakeyaml" % "1.18"
+        ,"org.scala-lang.modules" % "scala-xml_2.11" % "1.0.5"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(

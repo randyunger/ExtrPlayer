@@ -14,7 +14,7 @@ import scala.concurrent.duration.Duration
 
 object TelnetClient {
 
-  val instance = new TelnetClient("AudioSwitch", "blah", "integration")
+  val instance = new TelnetClient(ExtrConfig.host, "blah", "integration")
 
   def apply() = {
     instance
